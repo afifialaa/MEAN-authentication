@@ -1,31 +1,38 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
 
-function findUser(res, userObj){
-    User.findOne({email:userObj.email}, (err, user)=>{
+const jwt = require('jsonwebtoken');
+const secret_key = 'secret_key';
+
+function findUser(res, userObj) {
+    console.log(userObj);
+    User.findOne({ email: userObj.email }, (err, user) => {
         //mongoose error
-        if(err) console.log(err);
-        
-        if(user === null){
+        if (err) console.log(err);
+
+        if (user === null) {
             //wrong email
-            res.json({msg: 'email does not exist'});
-        }else{
-            bcrypt.compare(userObj.password, user.password, (err, result)=>{
-                if(err){
+            res.json({ msg: 'email does not exist' });
+        } else {
+            bcrypt.compare(userObj.password, user.password, (err, result) => {
+                if (err) {
                     console.log(err);
-                    res.json({msg: 'failed to authenticate user'});
+                    res.json({ msg: 'failed to authenticate user' });
                 }
 
+                console.log(result);
+
                 //result: boolean
-                if(result == true){
+                if (result == true) {
                     //generate jwt
-                    //const jwtoken = token.generateToken(user); 
+                    //generate token
+                    const token = jwt.sign({ user: user.email }, secret_key);
                     res.json({
-                        email: user.email
+                        token: token,
                     });
-                }else if(result == false){
+                } else if (result == false) {
                     //passwords did not match
-                    res.json({msg:'wrong password or email'});
+                    res.json({ msg: 'wrong password or email' });
                 }
             })
         }

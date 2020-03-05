@@ -1,7 +1,10 @@
 const User = require('../models/user.model');
 
+//json web token
+const jwt = require('jsonwebtoken');
+const secret_key = 'secret_key';
+
 function saveUser(res, userObj) {
-    console.log('#saveuser');
     let user = new User(userObj);
 
     user.save((err, user) => {
@@ -11,8 +14,12 @@ function saveUser(res, userObj) {
                 res.json({ msg: 'duplicate key error' });
             }
         }
-        //generate token and log user in
-        res.send({ msg: 'user was saved' });
+        //generate token
+        const token = jwt.sign({user: user.email}, secret_key);
+        res.send({ 
+            msg: 'user was saved',
+            token: token,
+        });
     })
 }
 

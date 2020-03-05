@@ -16,13 +16,19 @@ function signup(req, res){
 function signin(req, res){
     let user = {
         email: req.body.email,
-        password: req.body.email
+        password: req.body.password
     }
 
     findUser(res, user);
 }
 
+function someApiCall(req, res){
+    console.log('#get /test');
+    res.json({msg:'hello user'});
+}
+
 module.exports = {
     signup,
-    signin
+    signin,
+    someApiCall
 }
