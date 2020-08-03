@@ -8,7 +8,7 @@ module.exports = function(req, res, next){
 	jwt.verify(token, secret_key, (err, decoded) => {
 		if (err) {
             console.log(err);
-            res.json('unauthorized access');
+            return res.json('unauthorized access');
         }
         else{
             console.log('valid token');
