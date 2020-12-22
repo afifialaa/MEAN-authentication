@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const mongoDB = 'mongodb://localhost:27017/private';
 
-mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.MONGO_CLOUD, {useNewUrlParser: true, useUnifiedTopology: true});
 
 var db = mongoose.connection;
 

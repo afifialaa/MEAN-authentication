@@ -38,17 +38,6 @@ UserSchema.pre('save', function (next) {
     })
 })
 
-function handleE11000 (err, res, next) {
-    if (err.name === 'MongoError' && err.code === 11000) {
-        console.log('yeeeeeeeeeeeeeeesssssssssssssssss');
-        next(new Error('There was a duplicate key error'));
-    } else {
-        next();
-    }
-};
-
-//UserSchema.post('save', handleE11000);
-
 const User = mongoose.model('User', UserSchema);
 
 module.exports = User;
