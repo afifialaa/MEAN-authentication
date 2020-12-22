@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose.connect(process.env.MONGO_CLOUD, {useNewUrlParser: true, useUnifiedTopology: true});
 
-var db = mongoose.connection;
+let db = mongoose.connection;
 
 db.on('open', function(){
     console.log('dbConfig#open: connection established');

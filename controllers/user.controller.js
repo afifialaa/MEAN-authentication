@@ -61,10 +61,6 @@ function homePage(req, res) {
     return res.render('index', {err : ''});
 }
 
-function someApiCall(req, res) {
-    res.json({ msg: 'hello user' });
-}
-
 function someApiCall(req, res){
     res.json({msg:'hello user'});
 }
