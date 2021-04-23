@@ -2,19 +2,45 @@
     <h3>Login</h3>
     <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" class="form-control" formControlName="email" placeholder="user@example.domain" required>
+        <input type="email" id="email" class="form-control" formControlName="email" placeholder="user@example.domain"
+            required>
     </div>
+
+    <div *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)" class="invalid">
+        <div *ngIf="f.email.errors?.required">
+            *Email is required.
+        </div>
+        <div *ngIf="f.email.errors?.minlength">
+            *Email must be at least 8 characters long.
+        </div>
+        <div *ngIf="f.email.errors?.email">
+            *Not a valid email.
+        </div>
+    </div>
+
+
     <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" class="form-control" formControlName="password" placeholder="min 8 characters"  required>
+        <input type="password" id="password" class="form-control" formControlName="password"
+            placeholder="min 8 characters" required>
     </div>
+
+    <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)" class="invalid">
+        <div *ngIf="f.password.errors?.required">
+            *Password is required.
+        </div>
+        <div *ngIf="f.password.errors?.minlength">
+            *Password must be at least 8 characters long.
+        </div>
+    </div>
+
 
     <div>
         <a>FORGOT PASSWORD?</a>
     </div>
 
     <div class="form-group">
-        <button class="btn btn-success btn-md btn-block" (click)="login()">LOGIN</button>
+        <button class="btn btn-success btn-md btn-block" [disabled]="!loginForm.valid" (click)="login()">LOGIN</button>
     </div>
 
     <div>

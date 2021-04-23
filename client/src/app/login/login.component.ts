@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService} from '../services/login.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {User} from '../models/user';
 
 @Component({
@@ -14,13 +14,24 @@ export class LoginComponent implements OnInit {
 
     constructor(private loginSrvc:LoginService) { 
         this.loginForm = new FormGroup({
-            email: new FormControl(''),
-            password: new FormControl('')
+            email: new FormControl('', {validators: [
+                Validators.required,
+                Validators.email,
+                Validators.minLength(8),
+            ],updateOn: 'blur'}),
+            password: new FormControl('', {validators: [
+                Validators.minLength(8),
+                Validators.required,
+            ], updateOn: 'blur'})
         })
     }
 
     ngOnInit(): void {
     }
+
+    // convenience getter for easy access to form fields
+    get f() { return this.loginForm.controls; }
+
 
     login(){
         let user:User = {

@@ -14,10 +14,24 @@ export class SignupComponent implements OnInit {
 
     constructor(private signupSrvc: SignupService) {
         this.signupForm = new FormGroup({
-            email: new FormControl(''),
-            password: new FormControl('')
+            email: new FormControl('', {validators: [
+                Validators.required,
+                Validators.email,
+                Validators.minLength(8)
+            ], updateOn: 'blur'}),
+            password: new FormControl('', {validators: [
+                Validators.required,
+                Validators.minLength(8)
+            ], updateOn: 'blur'}),
+            confirmPassword: new FormControl('', {validators: [
+                Validators.required,
+                Validators.minLength(8)
+            ], updateOn: 'blur'})
         })
     }
+
+    // convenience getter for easy access to form fields
+    get f() { return this.signupForm.controls; }
 
     ngOnInit(): void {
     }

@@ -11,16 +11,24 @@ h3{
 button {
     border-radius: 20px;
     border-color: white;
-    background-color: #6ba0d2;
-}
-
-button:hover{
-    border-color: black;
-    background-color: #6ba0d2;
 }
 
 a{
     font-size: 12px;
-    color: #e294bc;
+    color: black;
     cursor: pointer;
+}
+
+.ng-invalid[required], .ng-invalid.required  {
+    border-left: 5px solid red; /* green */ 
+}
+
+.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; /* green */ 
+}
+
+.invalid{
+    color: red;
+    margin-top: -2%;
+    margin-bottom: 4%;
 }
