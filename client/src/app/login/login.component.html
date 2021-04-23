@@ -1,12 +1,12 @@
-<form>
+<form [formGroup]="loginForm">
     <h3>Login</h3>
     <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" class="form-control" placeholder="user@example.domain" required>
+        <input type="email" id="email" class="form-control" formControlName="email" placeholder="user@example.domain" required>
     </div>
     <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" class="form-control" placeholder="min 8 characters"  required>
+        <input type="password" id="password" class="form-control" formControlName="password" placeholder="min 8 characters"  required>
     </div>
 
     <div>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="form-group">
-        <button class="btn btn-success btn-md btn-block">LOGIN</button>
+        <button class="btn btn-success btn-md btn-block" (click)="login()">LOGIN</button>
     </div>
 
     <div>

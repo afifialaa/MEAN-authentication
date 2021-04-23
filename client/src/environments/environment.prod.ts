@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+    production: true,
+
+    loginURL: '/account/login',
+    signupURL: '/account/signup'
 };

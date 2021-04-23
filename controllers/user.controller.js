@@ -4,8 +4,6 @@ const jwtAuth = require('../authentication/jwt.auth');
 
 function signup(req, res){
     let userObj = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password
     }
@@ -14,10 +12,11 @@ function signup(req, res){
 
     user.save((err, user) => {
         if (err) {
-            return res.render('index', {err: 'Failed to create user'});
+            console.log(err);
+            return res.json({err: 'Email is already registered'});
         }
         const token = jwtAuth.generateToken(user.email);
-        return res.render('admin', {token: token});
+        return res.json({msg: 'User was created successfully'});
     })
 }
 
@@ -27,30 +26,31 @@ function login(req, res) {
         password: req.body.password
     }
 
+    console.log(userObj);
+
     User.findOne({ email: userObj.email }, (err, user) => {
         if (err) {
-            console.log(err)
-            return res.render('error', { err: 'mongoose failed' });
+            return res.json({err : 'Database error'});
         };
 
         if (user === null) {
-            return res.render('error', { err: 'email does not exist' });
+            return res.json({err: 'User does not exist'});
         };
 
         if (user === null) {
-            return res.json({ err: 'email does not exist' });
+            return res.json({err: 'User does not exist'});
         } else {
             bcrypt.compare(userObj.password, user.password, (err, result) => {
                 if (err) {
                     console.log(err);
-                    return res.render('error', { err: 'failed to authenticate user' });
+                    return res.json({msg: 'Failed to auth user'});
                 }
 
                 if (result == true) {
                     const token = jwtAuth.generateToken(user.email);
-                    return res.render('admin');
+                    return res.json({msg: 'User logged in'});
                 } else if (result == false) {
-                    return res.render('error', { err: 'wrong password or email' });
+                    return res.json({err: 'Wrong password'});
                 }
             })
         }

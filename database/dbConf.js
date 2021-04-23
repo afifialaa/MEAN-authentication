@@ -1,15 +1,16 @@
 const mongoose = require('mongoose');
+const mongoDB = process.env.MONGODB_LOCAL;
 
-mongoose.connect(process.env.MONGO_CLOUD, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(mongoDB, {useNewUrlParser: true, useCreateIndex:true, useUnifiedTopology:true, useFindAndModify: false});
 
 let db = mongoose.connection;
 
-db.on('open', function(){
-    console.log('dbConfig#open: connection established');
+db.on('open', ()=>{
+    console.log('Connected to database');
 })
 
-db.on('error', function(){
-    console.log('dbConfig#error: connection failed');
+db.on('error', ()=>{
+    console.log('Failed to connect to db');
 })
 
 module.exports = db;
