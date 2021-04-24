@@ -13,10 +13,10 @@ function signup(req, res){
     user.save((err, user) => {
         if (err) {
             console.log(err);
-            return res.json({err: 'Email is already registered'});
+            return res.status(403).json({msg: 'Email is already registered'});
         }
         const token = jwtAuth.generateToken(user.email);
-        return res.json({msg: 'User was created successfully'});
+        return res.status(201).json({msg: 'User was created successfully'});
     })
 }
 
@@ -34,11 +34,11 @@ function login(req, res) {
         };
 
         if (user === null) {
-            return res.json({err: 'User does not exist'});
+            return res.status(404).json({msg: 'User does not exist'});
         };
 
         if (user === null) {
-            return res.json({err: 'User does not exist'});
+            return res.status(404).json({err: 'User does not exist'});
         } else {
             bcrypt.compare(userObj.password, user.password, (err, result) => {
                 if (err) {
@@ -57,17 +57,8 @@ function login(req, res) {
     });;
 }
 
-function homePage(req, res) {
-    return res.render('index', {err : ''});
-}
-
-function someApiCall(req, res){
-    res.json({msg:'hello user'});
-}
 
 module.exports = {
     signup,
     login,
-    someApiCall,
-    homePage,
 }

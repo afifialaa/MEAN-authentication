@@ -45,6 +45,10 @@
         </div>
     </div>
 
+    <div *ngIf="errMsg" class="alert alert-danger" role="alert">
+        {{errMsg}}
+    </div>
+
     <div class="form-group">
         <button class="btn btn-success btn-md btn-block" [disabled]="!signupForm.valid">SIGN UP</button>
     </div>

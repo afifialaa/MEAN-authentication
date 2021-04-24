@@ -11,8 +11,10 @@ import {User} from '../models/user';
 export class SignupComponent implements OnInit {
 
     signupForm: FormGroup;
+    errMsg:string;
 
     constructor(private signupSrvc: SignupService) {
+        this.errMsg = '';
         this.signupForm = new FormGroup({
             email: new FormControl('', {validators: [
                 Validators.required,
@@ -36,17 +38,26 @@ export class SignupComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    clearForm(){
+        this.signupForm.reset();
+    }
+
     signup(){
         let user:User = {
             email: this.signupForm.value.email,
             password: this.signupForm.value.password,
         }
 
-        this.signupSrvc.signup(user).subscribe( (data) => {
-            console.log(data);
-        })
-
-
+        this.signupSrvc.signup(user).subscribe( 
+            (data) => {
+                this.errMsg = '';
+                console.log(data);
+            },
+            (error) => {
+                this.clearForm();
+                this.errMsg = error.error.msg;
+            }
+        )
     }
 
 }

@@ -11,8 +11,10 @@ import {User} from '../models/user';
 export class LoginComponent implements OnInit {
 
     loginForm:FormGroup;
+    errMsg:string;
 
     constructor(private loginSrvc:LoginService) { 
+        this.errMsg = '';
         this.loginForm = new FormGroup({
             email: new FormControl('', {validators: [
                 Validators.required,
@@ -32,6 +34,9 @@ export class LoginComponent implements OnInit {
     // convenience getter for easy access to form fields
     get f() { return this.loginForm.controls; }
 
+    clearForm(){
+        this.loginForm.reset();
+    }
 
     login(){
         let user:User = {
@@ -39,9 +44,15 @@ export class LoginComponent implements OnInit {
             password: this.loginForm.value.password
         }
 
-        this.loginSrvc.login(user).subscribe( (data) => {
-            console.log(data);
-        })
+        this.loginSrvc.login(user).subscribe(
+            (data) => {
+                console.log(data);
+            },
+            (error) => {
+                this.clearForm();
+                this.errMsg = error.error.msg;
+            }
+        )
     }
 
 }

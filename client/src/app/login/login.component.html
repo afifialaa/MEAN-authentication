@@ -34,6 +34,10 @@
         </div>
     </div>
 
+    <div *ngIf="errMsg" class="alert alert-danger" role="alert">
+        {{errMsg}}
+    </div>
+
 
     <div>
         <a>FORGOT PASSWORD?</a>

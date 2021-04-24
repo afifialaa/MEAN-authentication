@@ -11,6 +11,6 @@ export class LoginService {
     constructor(private httpClient:HttpClient) { }
 
     login(user:User){
-        return this.httpClient.post(environment.loginURL, user);
+        return this.httpClient.post<any>(environment.loginURL, user);
     }
 }
