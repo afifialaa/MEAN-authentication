@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService} from '../services/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {User} from '../models/user';
+import {User} from '../../models/user';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
     loginForm:FormGroup;
     errMsg:string;
 
-    constructor(private loginSrvc:LoginService) { 
+    constructor(private loginSrvc:LoginService, private router:Router) { 
         this.errMsg = '';
         this.loginForm = new FormGroup({
             email: new FormControl('', {validators: [
@@ -46,7 +47,9 @@ export class LoginComponent implements OnInit {
 
         this.loginSrvc.login(user).subscribe(
             (data) => {
-                console.log(data);
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('email', user.email);
+                this.router.navigate(['/user']);
             },
             (error) => {
                 this.clearForm();

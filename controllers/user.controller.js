@@ -16,7 +16,7 @@ function signup(req, res){
             return res.status(403).json({msg: 'Email is already registered'});
         }
         const token = jwtAuth.generateToken(user.email);
-        return res.status(201).json({msg: 'User was created successfully'});
+        return res.status(201).json({token: token});
     })
 }
 
@@ -26,11 +26,9 @@ function login(req, res) {
         password: req.body.password
     }
 
-    console.log(userObj);
-
     User.findOne({ email: userObj.email }, (err, user) => {
         if (err) {
-            return res.json({err : 'Database error'});
+            return res.json({msg : 'Database error'});
         };
 
         if (user === null) {
@@ -38,19 +36,19 @@ function login(req, res) {
         };
 
         if (user === null) {
-            return res.status(404).json({err: 'User does not exist'});
+            return res.status(404).json({msg: 'User does not exist'});
         } else {
             bcrypt.compare(userObj.password, user.password, (err, result) => {
                 if (err) {
                     console.log(err);
-                    return res.json({msg: 'Failed to auth user'});
+                    return res.status(403).json({msg: 'Failed to auth user'});
                 }
 
                 if (result == true) {
                     const token = jwtAuth.generateToken(user.email);
-                    return res.json({msg: 'User logged in'});
+                    return res.json({token: token});
                 } else if (result == false) {
-                    return res.json({err: 'Wrong password'});
+                    return res.status(403).json({msg: 'Wrong password'});
                 }
             })
         }
