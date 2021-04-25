@@ -23,6 +23,7 @@
         "@angular/platform-browser-dynamic": "~11.2.6",
         "@angular/router": "~11.2.6",
         "bcrypt": "^5.0.1",
+        "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "express-bearer-token": "^2.4.0",
         "jsonwebtoken": "^8.5.1",
