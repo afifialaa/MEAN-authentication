@@ -29,24 +29,27 @@ function login(req, res) {
     User.findOne({ email: userObj.email }, (err, user) => {
         if (err) {
             return res.json({msg : 'Database error'});
-        };
+        }
 
         if (user === null) {
             return res.status(404).json({msg: 'User does not exist'});
-        };
+        }
 
         if (user === null) {
             return res.status(404).json({msg: 'User does not exist'});
         } else {
             bcrypt.compare(userObj.password, user.password, (err, result) => {
                 if (err) {
-                    console.log(err);
                     return res.status(403).json({msg: 'Failed to auth user'});
                 }
 
                 if (result == true) {
+                    // Role should be based on database
+                    let role = '';
+                    userObj.email == 'admin@admin.com' ? role = 'admin' : role = 'user';
+
                     const token = jwtAuth.generateToken(user.email);
-                    return res.json({token: token});
+                    return res.status(200).json({token: token, role: role});
                 } else if (result == false) {
                     return res.status(403).json({msg: 'Wrong password'});
                 }
@@ -54,7 +57,6 @@ function login(req, res) {
         }
     });;
 }
-
 
 module.exports = {
     signup,

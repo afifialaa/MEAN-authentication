@@ -11,10 +11,10 @@ function verifyToken(req, res, next){
 
 	jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
 		if (err) {
-            return res.json({msg: "missing or invalid jwt"});
+            return res.json({msg: "Missing or invalid jwt"});
         }
         else{
-            console.log('valid token');
+            req.email = decoded.email;
             next();
         }
     })

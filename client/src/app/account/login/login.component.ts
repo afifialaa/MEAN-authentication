@@ -48,8 +48,11 @@ export class LoginComponent implements OnInit {
         this.loginSrvc.login(user).subscribe(
             (data) => {
                 localStorage.setItem('token', data.token);
+                localStorage.setItem('role', data.role);
                 localStorage.setItem('email', user.email);
                 this.router.navigate(['/user']);
+
+                localStorage.getItem('role') == 'admin' ? this.router.navigate(['/admin']) : this.router.navigate(['/user']);
             },
             (error) => {
                 this.clearForm();

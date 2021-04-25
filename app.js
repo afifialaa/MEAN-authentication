@@ -14,13 +14,15 @@ const bodyParser = require('body-parser');
 
 const cors = require('cors');
 
-const userRoutes = require('./routes/user.route');
+const role = require('./middlewares/role.mid');
+
+const accountRoutes = require('./routes/account.route');
 
 app.use(bearerToken());
 app.use(cors());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
-app.use('/account', userRoutes);
+app.use('/account', accountRoutes);
 
 module.exports = app;

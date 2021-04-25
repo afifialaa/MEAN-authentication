@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import {User} from '../models/user';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-user',
@@ -11,12 +10,17 @@ export class UserComponent implements OnInit {
 
     email:any;
 
-    constructor(private route: ActivatedRoute) {
+    constructor(private router:Router) {
         this.email = localStorage.getItem('email');
     }
 
 
     ngOnInit( ): void {
+    }
+
+    logout(){
+        localStorage.clear();
+        this.router.navigate(['/login']);
     }
 
 }

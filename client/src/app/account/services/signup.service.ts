@@ -11,6 +11,6 @@ export class SignupService {
     constructor(private httpClient:HttpClient) { }
 
     signup(user:User){
-        return this.httpClient.post(environment.signupURL, user);
+        return this.httpClient.post<any>(environment.signupURL, user);
     }
 }

@@ -15,7 +15,6 @@ export class BearerTokenInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         const token = localStorage.getItem("token");
-        console.log('interceptor :', token);
 		const headers = new HttpHeaders().set("Authorization", "Bearer " + token);
 
 		const clone = request.clone({

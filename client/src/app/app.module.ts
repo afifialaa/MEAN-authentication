@@ -12,12 +12,14 @@ import { UserComponent } from './user/user.component';
 import {AccountModule} from './account/account.module';
 
 import { BearerTokenInterceptor } from './interceptors/bearer-token.interceptor';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
         UserComponent,
+        AdminComponent,
     ],
     imports: [
         BrowserModule,

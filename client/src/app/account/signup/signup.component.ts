@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SignupService } from '../services/signup.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {User} from '../../models/user';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-signup',
@@ -13,7 +14,7 @@ export class SignupComponent implements OnInit {
     signupForm: FormGroup;
     errMsg:string;
 
-    constructor(private signupSrvc: SignupService) {
+    constructor(private signupSrvc: SignupService, private router:Router) {
         this.errMsg = '';
         this.signupForm = new FormGroup({
             email: new FormControl('', {validators: [
@@ -51,7 +52,9 @@ export class SignupComponent implements OnInit {
         this.signupSrvc.signup(user).subscribe( 
             (data) => {
                 this.errMsg = '';
-                console.log(data);
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('email', user.email);
+                this.router.navigate(['/user']);
             },
             (error) => {
                 this.clearForm();
